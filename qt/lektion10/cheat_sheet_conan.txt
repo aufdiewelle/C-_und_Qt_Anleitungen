@@ -1,0 +1,116 @@
+
+Infos:
+
+/******************************************************************************
+	- ConanIO
+	    ist ein C/C++ Package Manager der es ermöglich entsprechend
+	    einem erstellten Manifest Libarys zu builden und dem Projekt
+	    zur Verfügung zu stellen.
+
+		Befehl "conan install ." :
+		1. 	Erstellt im aktuellen Verzeichnis die
+		   	Datei "conaninfo.txt" in welcher entsprechend
+			der Datei "conanfile.txt"  die build Datei er-
+			stellt wird.
+
+
+		2. 	Ladet im Verzeichnis..
+			..@Win		-> C:\Users\[Benutzer]\.conan
+			..@Linux	-> /home/[Benutzer]/.conan/ 
+			..@OS-x		-> 
+			..den Source Code der notwendigen Libarys aus
+			dem conan Projekt herunter und includierd diese
+			in einem Qt Projekt über die 
+			folgenden Befehle  ..
+			
+				CONFIG += conan_basic_setup
+				include(conanbuildinfo.pri)
+			
+			..in der Qt "[projektname].pro" Datei. Auf diese 
+			Art muss die Bibliothek NICHT dem Projekt hinzugefugt 
+			werden, sondern wird über den include der Datei 
+			"conanbuildinfo.pri" verlinkt
+
+
+		3. 	Builded im Verzeichnis..
+			..@Win		-> C:\.conan und / oder C:\Users\[Benutzer]\.conan
+			..@Linux	-> /home/[Benutzer]/.conan/ 
+			..@OS-x		-> /home/[Benutzer]/.conan/ 
+			..die Libarys entsprechend notwendigen Libarys 
+			aus dem conan Projekt
+
+			Datei "conaninfo.txt":
+				Mit der datei kann ein conan projekt welche man 
+				unter dem folgenden Link findet: 
+				https://www.conan.io/search
+
+				# -> Kommentar
+
+				[requires]
+				libssh2/1.8.0@Wi3ard/stable
+				-> conan projekt welches gebuilded werden soll
+
+				[generators]
+				qmake	
+				..oder..
+				cmake
+				-> mit welchen compiler soll gebuilded werden
+
+				[options]
+				libssh2:shared=True
+				OpenSSL:shared=True
+				zlib:shared=True
+				-> welche Libarys sollen gebuilded werden
+
+				[imports]
+				bin, *.dll -> ./bin	#for Windows, bin ist konvention für Windows!
+				lib, *.so -> ./lib 	#for Linux 1
+				lib, *.so.1 -> ./lib 	#for Linux 2
+				lib, *.dylib -> ./lib	#for MacOs
+				-> kopieren der gebuilded Libary von bin-Ordner in 
+				./lib-Ordner vom Projekt. 
+
+				Beispiel Windows: bin, *.dll -> ./bin
+					alle erstellten *.dll Dateien kopieren von..
+					C:\.conan\[random_id]\1\bin kopieren nach .\bin
+					C:\.conan\[random_id]\1\bin	-> Buildordner
+					.\				-> Projektordner mit Datei "conaninfo.txt"
+
+		    Datei "conan.conf":
+				Konfigurieren der conan Software. Nach der Installation 
+				sollte kontrolliert werden, ob in der "conan.conf" Datei 
+				je nach OS im Verzeeichnis..
+				..@Win		-> C:\Users\[Benutzer]\.conan
+				..@Linux	-> /home/[Benutzer]/.conan/
+				..@OS-x		-> 
+				..bei der Option [settings_defaults] den folgenden Eintrag 
+				gemacht hat:
+				
+				..@Win	->
+					arch=x86
+					build_type=Release
+					compiler=Visual Studio
+					compiler.runtime=MD
+					compiler.version=14
+					os=Windows
+
+				*Info: 	@ Windows MUSS x86 sein, x64 ist nicht compatibel mit dem
+					MinGWx86 compiler der Qt Windows verwendet!
+
+
+				..@Linux->  
+					arch=x86_64
+					build_type=Release
+					compiler=gcc
+					compiler.libcxx=libstdc++
+					compiler.version=5.4
+					os=Linux
+
+				*Info: 	@ LinuxMUSS x68 und x64 sein, damit der Compiler GCC selbst 
+					entscheiden kann für welche Architektur das Projekt gebuilded 
+					werden soll (hängt vom Batriebssystem ab auf dem die IDE läuft).
+
+
+				..@OS-x	->
+					?
+

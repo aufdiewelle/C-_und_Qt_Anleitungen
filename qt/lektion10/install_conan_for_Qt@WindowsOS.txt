@@ -1,0 +1,121 @@
+﻿Windows OS: conan mit qt
+
+The following Software and Tools need to be are installed for develop with Qt & Conan:
+
+/**************************************************************************
+- Qt 5.n.n
+    ..download at: https://www.qt.io/download/
+    ..and install by install routine
+
+    Attention: "qmake" need to be added to path variable!
+
+/**************************************************************************
+- Generate ssh RSA Key for Git Lab
+
+    -> Download Putty "puttygen.exe" (http://www.putty.org/)
+    -> execute puttygen
+    -> create by "Generate" a new key (by moving the mouse cursor)
+    -> go to directory "C:\Users\mislmi1\.ssh" and save the 
+       following files:
+        -> Public key as "id_rsa_putty.pub"
+        -> Privat Key as "id_rsa_putty.ppk"
+      
+	Attention: Directory is protected and invisible!
+/**************************************************************************
+- GitHub
+
+    ..download at: https://git-scm.com/downloads
+        ..and install by install routine
+
+    Attention: "git" need to be added to path variable!
+
+        ..then change to directory where project should be downloaded 
+        and axecute following command for clone a project:
+    -> CLI~$: cd /myPathTo/Directory/Where/Project/Should/Downloaded
+    -> CLI~$: git clone git@git.codeninjas.io:serial2net/anywhere.git
+
+
+/**************************************************************************
+- cmake (necessary to build lib's by ConanIO)
+
+    ..download at: https://cmake.org/download/
+        ..and install by install routine
+        ..and add to path variable!
+
+        Attention: "make" need to be added to path variable!
+
+
+/**************************************************************************
+- ConanIO (necessary to build libssh2)
+  find a list of supported compilers for conan in file "settings.yml" in the 
+  directory C:\Users\[User]\.conan
+  
+    -> 	dowload conan at: https://www.conan.io/downloads
+    -> setup.exe ausführen
+	    
+    -> 	check by CLI with "conan" if it was added to system path variables
+       same time conan will create conan.conf. Conan is look at OS which 
+       compilers are avaiable and set them.
+       
+    -> 	check file "default" as follow:
+	@Win	-> C:\Users\Windows10x64\.conan\profiles\default
+		os=Windows
+		os_build=Windows
+		arch=x86_64
+		arch_build=x86_64
+		compiler=Visual Studio
+		compiler.runtime=MD
+		compiler.version=14
+		build_type=Release
+
+		Check out the options for the MSVS "compiler.runtime=xx" 
+		with the following links:
+		https://msdn.microsoft.com/en-us/library/2kzt1wy3.aspx
+		
+		Check out folow link for download MSVS
+		https://support.microsoft.com/de-de/help/2977003/the-latest-supported-visual-c-downloads
+		https://www.itechtics.com/microsoft-visual-c-redistributable-versions-direct-download-links/
+
+            Attention: "conan" need to be added to path variable!
+	
+	Info: 	MSVS compiler are freeware and can be downloaded at 
+		msdn.microsoft.com. At Windows 10 some Version are 
+		automatic delivered with the OS.
+
+/**************************************************************************
+- Manuel download lib source & build dependencies by conan (see next for automatic)
+
+    build libbsh2 inside the cloned repository directory where file 
+    "conaninfo.txt" is avaiable
+
+    -> CLI~$: conan install .
+
+    ..if problems come up during build libssh2 then change to 
+    directory .conan where all libs are dowloaded and stored,
+    delete all libs and try again to build from binary with..
+
+    -> CLI~$: conan install --build libssh2
+    ! does not proper work @ Windows !
+
+/**************************************************************************
+- Automatic download lib source & build dependencies by conan with Qt *.pro file
+
+    add follow line to your Qt projectfile <myprojectnaem>.pro:
+    
+       win32: system($$cmd.exe conan install .)
+    
+       *this will execute the command at cmd BEFORE build the project IF so far 
+         no build is done! If build is allready done, delete the following build 
+	 folders:
+            build-<myProjectName>_Qt_5_n_n_MinGW_32bit-Debug
+            build-<myProjectName>_Qt_5_n_n_MinGW_32bit-Release
+    
+    add follow lines to your Qt projectfile <myprojectnaem>.pro:
+    
+       INCLUDEPATH += $$PWD/
+       DEPENDPATH += $$PWD/
+       win32: LIBS += -L$$PWD"\bin" -llibssh2
+    
+       *this will include the lib file "libssh2.dll" to the Qt project under the 
+        project path "./bin". The folder "bin" for librarys is a convention at
+	windows distributions!

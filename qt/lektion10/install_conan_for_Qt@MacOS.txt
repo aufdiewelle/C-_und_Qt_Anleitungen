@@ -1,0 +1,146 @@
+Mac OS: conan mit qt
+
+The following Software and Tools need to be are installed for develop with Qt & Conan:
+
+/******************************************************************************
+
+Build MacOS 10.11 ElCapitan VM according following tutorial:
+https://www.youtube.com/watch?v=5RQ21XG8Ts4
+
+    1.  Download VM-Player and install
+
+    2.  Download Mac OS 10.11 El Capitan.rar is linked at 
+        the YouTube tutorial.
+
+        After download rar do:
+        2.1.    unpack .rar to wished path
+        2.2.    execute win-install.cmd in path ..\Unlocker\unlocker204\unlocker204 
+            as administrator for build .vmx
+    3.  Start .vmx with VM-Player by option "Open VM"
+
+
+/**************************************************************************
+- XCode
+    ..download XCode at App Store and install it
+
+
+/**************************************************************************
+- Qt 5.n.n
+    ..download at: https://www.qt.io/download/
+    ..and install by install routine
+
+    Attention: "qmake" need to be added to path variable!
+
+
+/**************************************************************************
+- Generate ssh RSA Key for Git Lab
+
+     DO NOT EXECUTE COMMANDS AS ROOT! directory is not the same!
+    -> CLI~$: ssh-keygen -t rsa
+    -> CLI~$: leave it empty and push ENTER for std path
+    -> CLI~$: <follow instruction and set 2 x passphrase>
+
+    get pub ssh key
+    -> CLI~$: pbcopy > ~/.ssh/id_rsa.pub (copy key to clipboard)
+
+    ..or do for show the hidden files..
+
+    -> CLI~$: defaults write com.apple.Finder AppleShowAllFiles YES
+    -> CLI~$: killall Finder
+
+    ..use "Finder" to open files in path /Users/<theUserName>/.ssh
+
+    ..and use the following to hide files again..
+
+    -> CLI~$: defaults write com.apple.Finder AppleShowAllFiles NO
+    -> CLI~$: killall Finder
+
+/**************************************************************************
+- GitHub
+
+    ..download at: https://git-scm.com/downloads
+        ..and install by install routine 
+
+    Attention: "git" need to be added to path variable!
+
+        ..then change to directory where project should be downloaded 
+        and axecute following command for clone a project:
+    -> CLI~$: ch /myPathTo/Directory/Where/Project/Should/Downloaded
+    -> CLI~$: git clone git@git.codeninjas.io:serial2net/anywhere.git
+
+/**************************************************************************
+    - cmake (necessary to build lib's by ConanIO)
+
+        ..dowload at: https://cmake.org/download/
+    ..install according: http://tudat.tudelft.nl/projects/tudat/wiki/Install_on_Mac_OS_X
+    ..add cmake to path
+    -> CLI~$: sudo mkdir -p /usr/local/bin
+    -> CLI~$: sudo /Applications/CMake.app/Contents/bin/cmake-gui --install=/usr/local/bin
+
+            Attention: "make" need to be added to path variable!
+
+
+/**************************************************************************
+- ConanIO (necessary to build libssh2)
+    Download file at "https://conan.io/downloads" according Mac OS:
+
+            -> install Homebrew as follow (package manager, necessary to install ConanIO)  
+    -> CLI~$: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    Attention: "brew" need to be added to path variable! 
+
+    -> Then install conan with brew:         
+        -> CLI~$: brew install conan
+        -> CLI~$: brew update
+	    
+    -> check by CLI with "conan" if it was added to system path variables
+       same time conan will create conan.conf. Conan is look at OS which 
+       compilers are avaiable and set them.
+       
+    -> check "conan.conf" if it is as follow:
+	arch=x86_64
+	build_type=Release
+	compiler=apple-clang
+	compiler.libcxx=libc++
+	compiler.version=8.1
+	os=Macos
+
+	Attention: "conan" need to be added to path variable!
+
+/**************************************************************************
+- Manuel download lib source & build dependencies by conan (see next for automatic)
+
+    build libbsh2 inside the cloned repository directory where file 
+    "conaninfo.txt" is avaiable
+
+    -> CLI~$: install conan .
+    ! does not proper work @ MacOSx, go straight to next!
+
+    ..if problems come up during build libssh2 then change to 
+    directory .conan where all libs are dowloaded and stored,
+    delete all libs and try again to build from binary with..
+
+    -> CLI~$: conan install --build libssh2
+
+/**************************************************************************
+- Automatic download lib source & build dependencies by conan with Qt *.pro file
+
+    add follow line to your Qt projectfile <myprojectnaem>.pro:
+    
+       unix:  system($$xterm conan install --build libssh2)
+    
+       *this will execute the command at terminal BEFORE build the project IF so
+       	far no build is done! If build is allready done, delete the following 
+	build folders:
+            build-<myProjectName>_Qt_5_n_n_MinGW_32bit-Debug
+            build-<myProjectName>_Qt_5_n_n_MinGW_32bit-Release
+    
+    add follow lines to your Qt projectfile <myprojectnaem>.pro:
+    
+       INCLUDEPATH += $$PWD/
+       DEPENDPATH += $$PWD/
+       unix: LIBS += -L$$PWD/lib/ -lssh2
+    
+       *this will include the lib file "libssh2.dylib" (TODO: check) to the Qt
+        project under the project path "./lib". The folder "lib" for librarys 
+	is a convention at linux distributions.
+	

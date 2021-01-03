@@ -1,0 +1,134 @@
+Linux OS: conan mit qt
+
+The following Software and Tools need to be are installed for develop with Qt & Conan:
+
+/**************************************************************************
+- Qt 5.n.n
+    ..download at: https://www.qt.io/download/
+
+            Link: https://www.codeproject.com/tips/758893/installing-qt-on-linux
+            -> check first for system update
+            -> CLI~$: sudo apt-get update && sudo apt-get upgrade
+            -> CLI~$: sudo apt-get autoremove
+
+            -> give permission to the downloaded file!
+            -> CLI~$: chmod +x /home/<user name>/Downloads/qt-unified-linux-x64-2.0.5-2-online.run
+            -> ..then execute install routine
+    Info: make sure to install the component: Tool/Qt Creator 4.n.n/Qt Installer Framework 2.0
+
+            -> install g++ compiler
+            -> CLI~$: sudo apt-get install build-essential
+
+            -> install OpenGL 
+            -> CLI~$: sudo apt-get install mesa-common-dev
+
+            -> install dependencies of OpenGL
+            -> CLI~$: sudo apt-get install libcr-dev
+            -> CLI~$: sudo apt-get install libglu1-mesa-dev -y
+
+            -> install ssl-encryption (not necessary for Qt)
+            -> CLI~$: sudo apt-get libssl-dev
+
+            -> restart computer and the Qt should compile without qmake fault! 
+
+    Attention: "qmake" need to be added to path variable!
+
+/**************************************************************************
+- Generate ssh RSA Key for Git Lab
+
+     DO NOT EXECUTE COMMANDS AS ROOT! directory is not the same!
+    -> CLI~$: ssh-keygen
+            .. follow instruction, best is to stay at default setting for directory!
+
+    -> CLI~$: eval "$(ssh-agent -s)"
+    -> CLI~$: ssh-add ~/.ssh/id_rsa
+
+            -> standard directory: /home/.ssh/id_rsa.pub
+    ..open id_rsa.pub and copy key to server
+
+/**************************************************************************
+- GitHub
+
+    -> CLI~$: sudo apt-get install git
+            -> CLI~$: git config --global user.name "Michael Mislin-Mint"
+            -> CLI~$: git config --global user.email "m.mislin@serial2net.ch"
+
+    Attention: "git" need to be added to path variable!
+
+        ..then change to directory where project should be downloaded 
+        and axecute following command for clone a project:
+    -> CLI~$: ch /myPathTo/Directory/Where/Project/Should/Downloaded
+    -> CLI~$: git clone git@git.codeninjas.io:serial2net/anywhere.git
+
+
+
+/**************************************************************************
+    - cmake (necessary to build lib's by ConanIO)
+
+    -> CLI~$: sudo apt install cmake-gui
+    -> check if command "make" is registered to path variable!           
+
+            Attention: "make" need to be added to path variable!
+
+
+/**************************************************************************
+- ConanIO (necessary to build libssh2)
+
+    -> dowload conan at: https://www.conan.io/downloads
+            -> give permission to the downloaded file!
+            -> CLI~$: chmod +x /home/<user name>/Downloads/conan-ubuntu-64_0_22_3.deb
+            -> execute package installer
+
+    -> check by CLI with "conan" if it was added to system path variables
+       same time conan will create conan.conf. Conan is look at OS which 
+       compilers are avaiable and set them.
+       
+    -> check "conan.conf" in path "./home/[user name]/.conan/" if it is as follow:
+		arch=x86_64
+		build_type=Release
+		compiler=gcc
+		compiler.libcxx=libstdc++
+		compiler.version=5.4
+		os=Linux
+
+        Attention: "conan" need to be added to path variable!
+
+/**************************************************************************
+- Manuel download lib source & build dependencies by conan (see next for automatic)
+
+    build libbsh2 inside the cloned repository directory where file 
+    "conaninfo.txt" is avaiable
+
+    -> CLI~$: install conan .
+    ! does not proper work @ Linux, go straight to next!
+
+    ..if problems come up during build libssh2 then change to 
+    directory .conan where all libs are dowloaded and stored,
+    delete all libs and try again to build from binary with..
+
+    -> CLI~$: conan install . --build libssh2
+
+/**************************************************************************
+- Automatic download lib source & build dependencies by conan with Qt *.pro file
+
+    add follow line to your Qt projectfile <myprojectnaem>.pro:
+    
+       unix:  system($$xterm conan install --build libssh2)
+    
+       *this will execute the command at terminal BEFORE build the project IF so
+       	far no build is done! If build is allready done, delete the following 
+	build folders:
+            build-<myProjectName>_Qt_5_n_n_MinGW_32bit-Debug
+            build-<myProjectName>_Qt_5_n_n_MinGW_32bit-Release
+    
+    add follow lines to your Qt projectfile <myprojectnaem>.pro:
+    
+       INCLUDEPATH += $$PWD/
+       DEPENDPATH += $$PWD/
+       unix: LIBS += -L$$PWD/lib/ -lssh2
+    
+       *this will include the lib file "libssh2.so" & "libssh2.so.1" to the Qt 
+        project under the project path "./lib/". The folder "lib" for librarys 
+	is a convention at linux distributions.
+	
+    	

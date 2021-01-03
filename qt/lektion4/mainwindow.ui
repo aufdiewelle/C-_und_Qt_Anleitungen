@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>473</width>
+    <height>605</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>String Methoden</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="LinkLabel">
+      <property name="text">
+       <string>Link Qt:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="link">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="eingabe1Label">
+      <property name="text">
+       <string>Eingabe 1:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="eingabe1LineEdit"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="eingabe2Label">
+      <property name="text">
+       <string>Eingabe 2:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="eingabe2LineEdit"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="appendPushButton">
+      <property name="text">
+       <string>append</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="appendLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="atPushButton">
+      <property name="text">
+       <string>at</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="atLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QPushButton" name="comparePushButton">
+      <property name="text">
+       <string>compare</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="compareLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QPushButton" name="countPushButton">
+      <property name="text">
+       <string>count</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="countLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QPushButton" name="endWithPushButton">
+      <property name="text">
+       <string>endWith</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="endWithLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QPushButton" name="indexOfPushButton">
+      <property name="text">
+       <string>indexOf</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QLineEdit" name="indexOfLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QPushButton" name="insertPushButton">
+      <property name="text">
+       <string>insert</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="insertLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="0">
+     <widget class="QPushButton" name="lastIndexOfPushButton">
+      <property name="text">
+       <string>lastIndexOf</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="1">
+     <widget class="QLineEdit" name="lastIndexLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QPushButton" name="length">
+      <property name="text">
+       <string>length</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QLineEdit" name="lengthLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="0">
+     <widget class="QPushButton" name="prependPushButton">
+      <property name="text">
+       <string>prepend</string>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="1">
+     <widget class="QLineEdit" name="prependLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="0">
+     <widget class="QPushButton" name="removePushButton">
+      <property name="text">
+       <string>remove</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="1">
+     <widget class="QLineEdit" name="removeLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="14" column="0">
+     <widget class="QPushButton" name="replace">
+      <property name="text">
+       <string>replace</string>
+      </property>
+     </widget>
+    </item>
+    <item row="14" column="1">
+     <widget class="QLineEdit" name="replaceLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="0">
+     <widget class="QPushButton" name="resizePushButton">
+      <property name="text">
+       <string>resize</string>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="1">
+     <widget class="QLineEdit" name="resizeLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="16" column="0">
+     <widget class="QPushButton" name="leftRefPushButton">
+      <property name="text">
+       <string>leftRef</string>
+      </property>
+     </widget>
+    </item>
+    <item row="16" column="1">
+     <widget class="QLineEdit" name="leftRefLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="17" column="0">
+     <widget class="QPushButton" name="rightRefPushButton">
+      <property name="text">
+       <string>rightRef</string>
+      </property>
+     </widget>
+    </item>
+    <item row="17" column="1">
+     <widget class="QLineEdit" name="rightRefLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="18" column="0">
+     <widget class="QPushButton" name="splitPushButton">
+      <property name="text">
+       <string>split</string>
+      </property>
+     </widget>
+    </item>
+    <item row="18" column="1">
+     <widget class="QLineEdit" name="splitLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="19" column="0">
+     <widget class="QPushButton" name="startWithPushButton">
+      <property name="text">
+       <string>startWith</string>
+      </property>
+     </widget>
+    </item>
+    <item row="19" column="1">
+     <widget class="QLineEdit" name="startWithLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="20" column="0">
+     <widget class="QPushButton" name="truncatePushButton">
+      <property name="text">
+       <string>truncate</string>
+      </property>
+     </widget>
+    </item>
+    <item row="20" column="1">
+     <widget class="QLineEdit" name="truncateLineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
